@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 
-
 interface FormProps {
   onCancel: () => void;
   onAddService: (service: Service) => void;
@@ -45,12 +44,11 @@ function Form({ onCancel, onAddService }: FormProps) {
   const validateForm = () => {
     const isServiceNameValid = serviceName.trim() !== '';
     const isLoginValid = login.trim() !== '';
-    const isPasswordValid =
-      password.length >= 8 &&
-      password.length <= 16 &&
-      /[a-zA-Z]/.test(password) &&
-      /\d/.test(password) &&
-      /[!@#$%^&*]/.test(password);
+    const isPasswordValid = password.length >= 8
+      && password.length <= 16
+      && /[a-zA-Z]/.test(password)
+      && /\d/.test(password)
+      && /[!@#$%^&*]/.test(password);
 
     setIsButtonDisabled(!(isServiceNameValid && isLoginValid && isPasswordValid));
   };
@@ -60,13 +58,6 @@ function Form({ onCancel, onAddService }: FormProps) {
   };
 
   const renderValidationMessage = () => {
-    const isPasswordValid =
-      password.length >= 8 &&
-      password.length <= 16 &&
-      /[a-zA-Z]/.test(password) &&
-      /\d/.test(password) &&
-      /[!@#$%^&*]/.test(password);
-
     return (
       <div>
         {password.length >= 8 ? (
@@ -97,12 +88,11 @@ function Form({ onCancel, onAddService }: FormProps) {
     e.preventDefault();
     const isServiceNameValid = serviceName.trim() !== '';
     const isLoginValid = login.trim() !== '';
-    const isPasswordValid =
-      password.length >= 8 &&
-      password.length <= 16 &&
-      /[a-zA-Z]/.test(password) &&
-      /\d/.test(password) &&
-      /[!@#$%^&*]/.test(password);
+    const isPasswordValid = password.length >= 8
+      && password.length <= 16
+      && /[a-zA-Z]/.test(password)
+      && /\d/.test(password)
+      && /[!@#$%^&*]/.test(password);
 
     if (isServiceNameValid && isLoginValid && isPasswordValid) {
       const newService: Service = {
@@ -112,14 +102,13 @@ function Form({ onCancel, onAddService }: FormProps) {
         url,
       };
       onAddService(newService);
-      setPassword(''); // Limpar o campo de senha após o cadastro
-      setShowPassword(false); // Resetar o estado do botão de mostrar senha
+      setPassword('');
+      setShowPassword(false);
 
-      // Exibe o alerta com SweetAlert2
       Swal.fire({
         title: 'Serviço cadastrado com sucesso',
         icon: 'success',
-        timer: 1500, // Desaparece após 1.5 segundos
+        timer: 1500,
         showConfirmButton: false,
       });
     }
@@ -127,39 +116,39 @@ function Form({ onCancel, onAddService }: FormProps) {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={ handleSubmit }>
         <label htmlFor="serviceName">Nome do serviço</label>
         <input
           type="text"
           id="serviceName"
-          value={serviceName}
-          onChange={handleServiceNameChange}
+          value={ serviceName }
+          onChange={ handleServiceNameChange }
         />
 
         <label htmlFor="login">Login</label>
-        <input type="text" id="login" value={login} onChange={handleLoginChange} />
+        <input type="text" id="login" value={ login } onChange={ handleLoginChange } />
 
         <label htmlFor="password">Senha</label>
         <input
-          type={showPassword ? 'text' : 'password'}
+          type={ showPassword ? 'text' : 'password' }
           id="password"
-          value={password}
-          onChange={handlePasswordChange}
+          value={ password }
+          onChange={ handlePasswordChange }
         />
         {renderValidationMessage()}
 
         <label htmlFor="url">URL</label>
-        <input type="text" id="url" value={url} onChange={handleUrlChange} />
+        <input type="text" id="url" value={ url } onChange={ handleUrlChange } />
 
-        <button type="submit" disabled={isButtonDisabled}>
+        <button type="submit" disabled={ isButtonDisabled }>
           Cadastrar
         </button>
-        <button type="button" onClick={onCancel}>
+        <button type="button" onClick={ onCancel }>
           Cancelar
         </button>
         <button
           type="button"
-          onClick={toggleShowPassword}
+          onClick={ toggleShowPassword }
           data-testid="show-hide-form-password"
         >
           {showPassword ? 'Esconder senha' : 'Mostrar senha'}
