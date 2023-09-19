@@ -1,6 +1,8 @@
+// App.tsx
 import React, { useState } from 'react';
 import './App.css';
 import Form, { Service } from './components/Form';
+import ServiceItem from './components/ServiceItem';
 
 function App() {
   const [showForm, setShowForm] = useState(false);
@@ -20,47 +22,23 @@ function App() {
     const updatedServices = [...services];
     updatedServices.splice(index, 1);
     setServices(updatedServices);
-
-    if (updatedServices.length === 0) {
-      setNoServicesMessage('Nenhuma senha cadastrada');
-    }
   };
 
   const toggleHidePasswords = () => {
     setHidePasswords(!hidePasswords);
   };
 
-  const [noServicesMessage, setNoServicesMessage] = useState('');
-
   return (
     <div>
       <h1>Gerenciador de senhas</h1>
-      {services.length === 0 ? <p>{noServicesMessage}</p> : null}
+      {services.length === 0 ? <p>Nenhuma senha cadastrada</p> : null}
       {services.map((service, index) => (
-        <div key={ index }>
-          <a href={ service.url } target="_blank" rel="noopener noreferrer">
-            {service.serviceName}
-          </a>
-          <p>
-            Login:
-            {service.login}
-          </p>
-          <p>
-            Senha:
-            {' '}
-            {hidePasswords ? (
-              '******'
-            ) : (
-              <span data-testid={ `service-password-${index}` }>{service.password}</span>
-            )}
-          </p>
-          <button
-            onClick={ () => removeService(index) }
-            data-testid={ `remove-btn-${index}` }
-          >
-            Remover
-          </button>
-        </div>
+        <ServiceItem
+          key={ index }
+          service={ service }
+          onRemove={ () => removeService(index) }
+          hidePasswords={ hidePasswords }
+        />
       ))}
       {showForm ? (
         <Form onCancel={ toggleForm } onAddService={ addService } />
